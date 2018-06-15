@@ -14,11 +14,14 @@ String.prototype.escapeSpecialChars = function() {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.locals.connection.query('SELECT * from posts', function (error, results, fields) {
-   if(error) throw error;
-   console.log(JSON.stringify(results).escapeSpecialChars());
-   res.send(JSON.stringify(results));
- });
+  res.locals.connection.query('USE b03703023_blog', function (err) {
+    if (err) throw err;
+    res.locals.connection.query('SELECT * from posts', function (error, results, fields) {
+    if(error) throw error;
+    console.log(JSON.stringify(results).escapeSpecialChars());
+    res.send(JSON.stringify(results));
+  });
+  });
 });
 
 

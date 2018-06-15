@@ -8,10 +8,13 @@ var userSQL = require('../db/user');
 var connection = mysql.createConnection(config.mysql); */
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.locals.connection.query('SELECT * from users', function (error, results, fields) {
+  res.locals.connection.query('USE b03703023_blog', function (err) {
+    if (err) throw err;
+    res.locals.connection.query('SELECT * from users', function (error, results, fields) {
    if(error) throw error;
    console.log(JSON.stringify(results));
    res.send(JSON.stringify(results));
+    });
  });
 });
 
@@ -22,25 +25,31 @@ router.post('/', function(req, res) {
   //console.log('new User: ',user.username)
 
   if(data.purpose === 'addUser'){
+    res.locals.connection.query('USE b03703023_blog', function (err) {
+      if (err) throw err;
     res.locals.connection.query('INSERT INTO users SET ? ',user, function(err, result) {
       if(err){
         console.log('error: ',err)
       }
     });
+    });
   }
 
   else if(data.purpose === 'login'){
-    res.locals.connection.query('SELECT * FROM users WHERE username = ? AND password= ?', [data.username, data.password], function(err,result){
-      if(err){
-        console.log('error: ',err)
-      }
-      console.log(result)
-      if(result.length === 0){
-        res.send(JSON.stringify('login fail'))
-      }
-      else{
-        res.send(JSON.stringify('login success'))
-      }
+    res.locals.connection.query('USE b03703023_blog', function (err) {
+      if (err) throw err;
+      res.locals.connection.query('SELECT * FROM users WHERE username = ? AND password= ?', [data.username, data.password], function(err,result){
+        if(err){
+          console.log('error: ',err)
+        }
+        console.log(result)
+        if(result.length === 0){
+          res.send(JSON.stringify('login fail'))
+        }
+        else{
+          res.send(JSON.stringify('login success'))
+        }
+      });
     });
   }
   
