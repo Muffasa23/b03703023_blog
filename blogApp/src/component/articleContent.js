@@ -1,52 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { updatePosts, getTitle, getContent, getTime } from '../actions/posts';
 
-let title,time,body;
-
-export default class ArticleContent extends Component{
+class ArticleContent extends Component{
     componentDidMount(){
         fetch('http://localhost:5566/posts')
             .then(res => res.json().then( data => {
-                console.log("data", JSON.stringify(data).replace(/\\n/g, "\\n"));
-                this.setState({posts: data});
+                this.props.updatePosts(data);
             })
         );
     }
 
     constructor(props) {
-        // Required step: always call the parent class' constructor
         super(props);
-    
-        // Set the state directly. Use props if necessary.
-        this.state = {
-          posts: []
-        }
       }
 
-      
-
       render(){
-        console.log(this.state.posts);
-        if (this.state.posts.length !== 0){
-            title = this.state.posts[0].title
-            body = this.state.posts[0].body
-            time = this.state.posts[0].updated_at
+        if(this.props.posts.totalPost.length !== 0){
+            return(
+                <div className='articleContent'>
+                    <div className='articleTitle'>{this.props.posts.currentTitle==='' ? this.props.posts.totalPost[0].title:this.props.posts.currentTitle} </div>
+                    <div className='articleTime'>{this.props.posts.currentTimee==='' ? this.props.posts.totalPost[0].created_at:this.props.posts.currentTime} </div>
+                    <div className='articleBody'>{this.props.posts.currentContent==='' ? this.props.posts.totalPost[0].body:this.props.posts.currentContent}</div>
+                </div>
+            )
         }
         else{
-            title = null
-            body = null
-            time = null
+            return null
         }
         
-
-
-        return(
-            <div className='articleContent'>
-                <div className='articleTitle'>{title} </div>
-                <div className='articleTime'>{time} </div>
-                <div className='articleBody'>{body} </div>
-            </div>
-        )
     }
 }
+
+function mapStateToProps(state){
+    return{
+        posts: state.posts,
+        users: state.users
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        updatePosts:(posts) => {
+            dispatch(updatePosts(posts))
+        },
+        getTitle:(title) => {
+            dispatch(getTitle(title))
+        },
+        getContent:(content) => {
+            dispatch(getContent(content))
+        },
+        getTime:(time) => {
+            dispatch(getTime(time))
+        },
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleContent));

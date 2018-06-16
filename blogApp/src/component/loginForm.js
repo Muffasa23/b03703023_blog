@@ -17,13 +17,12 @@ class LoginForm extends Component{
         this.getUsername = this.getUsername.bind(this);
         this.getPassword = this.getPassword.bind(this);
         this.getRepeatPassword = this.getRepeatPassword.bind(this);
-        console.log(this.props);
     }
     
     componentDidMount(){
         fetch('http://localhost:5566/users')
             .then(res => res.json().then( data => {
-                console.log("data", JSON.stringify(data));
+                //console.log("data", JSON.stringify(data));
                 this.props.updateUsers(JSON.stringify(data));
             })
         );
@@ -63,7 +62,7 @@ class LoginForm extends Component{
 
             let time = new Date().toLocaleString
 
-            console.log(time)
+            //console.log(time)
             let data = {
                 purpose:'addUser',
                 username: username,
@@ -125,7 +124,7 @@ class LoginForm extends Component{
                 /> : null}
 
                     <input id="tab-1" type="radio" name="tab" className="sign-in" defaultChecked/><label htmlFor="tab-1" className="tab">Sign In</label>
-                    <input id="tab-2" type="radio" name="tab" className="sign-up"/><label for="tab-2" className="tab">Sign Up</label>
+                    <input id="tab-2" type="radio" name="tab" className="sign-up"/><label htmlFor="tab-2" className="tab">Sign Up</label>
                     <div className="login-form">
                         <div className="sign-in-htm">
                             <div className="group">

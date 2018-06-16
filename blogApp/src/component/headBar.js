@@ -15,7 +15,7 @@ export default class HeadBar extends Component{
 
                     <nav>
                         <ul className="menu">
-                            <li><a>Home</a></li>
+                            {/* <li><a>Home</a></li> */}
                         </ul>
                     </nav>
                 </div>

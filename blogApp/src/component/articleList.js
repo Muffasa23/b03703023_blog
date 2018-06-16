@@ -1,56 +1,102 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { updatePosts, getTitle, getContent, getTime } from '../actions/posts';
 
-let title,time,body;
+class ArticleList extends Component{
+    constructor(props) {
+        super(props);
+        this.handleChangePost = this.handleChangePost.bind(this);
+      }
 
-export default class ArticleList extends Component{
+
     componentDidMount(){
         fetch('http://localhost:5566/posts')
             .then(res => res.json().then( data => {
-                console.log("data", JSON.stringify(data).replace(/\\n/g, "\\n"));
-                this.setState({posts: data});
+                this.props.updatePosts(data);
             })
         );
     }
 
-    constructor(props) {
-        // Required step: always call the parent class' constructor
-        super(props);
     
-        // Set the state directly. Use props if necessary.
-        this.state = {
-          posts: []
-        }
+
+      handleChangePost(e){
+          this.props.getTitle(e.currentTarget.textContent)
+
+          let data={
+              purpose: 'showPost',
+              title: e.currentTarget.textContent
+          }
+
+          fetch('http://localhost:5566/posts',{
+                method: 'POST',
+                headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'application/json','Accept': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                if (response.status >= 400) {
+                  throw new Error("Bad response from server");
+                }
+                return response.json();
+            }).then(data => {
+                this.props.getContent(data[0].body);
+                this.props.getTime(data[0].created_at);
+            }).catch(function(err) {
+                console.log(err)
+            });
+
       }
 
-      
-
       render(){
-        console.log(this.state.posts);
-        if (this.state.posts.length !== 0){
-            title = this.state.posts[0].title
-            body = this.state.posts[0].body
-            time = this.state.posts[0].updated_at
-        }
-        else{
-            title = null
-            body = null
-            time = null
-        }
         
+        if(this.props.posts.totalPost.length !== 0){
+            return(
+                <div className='articleContainer'>
+                    <li className='widget-article'>
+                        <h3 className='articleListTitle'>List of Articles</h3>
+                        <ul className='articleList'>
+                            {this.props.posts.totalPost.map(function(post){
+                                return (
+                                    <li className='articleCell'>
+                                        <div className='articleCellTitle' onClick={this.handleChangePost}>{post.title}</div>
+                                    </li>
+                            )
+                            },this)}
+                        </ul>
+                    </li>
+                </div>
+            )
+        }
 
+        else{
+            return null
+        }
 
-        return(
-            <div className='articleContainer'>
-                <li className='widget-article'>
-                    <h3 className='articleListTitle'>List of Articles</h3>
-                    <ul className='articleList'>
-                        <li className='articleCell'>
-                            <div className='articleCellTitle'>{title}</div>
-                        </li>
-                    </ul>
-                </li>
-            </div>
-        )
+        
     }
 }
+
+function mapStateToProps(state){
+    return{
+        posts: state.posts,
+        users: state.users
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        updatePosts:(posts) => {
+            dispatch(updatePosts(posts))
+        },
+        getTitle:(title) => {
+            dispatch(getTitle(title))
+        },
+        getContent:(content) => {
+            dispatch(getContent(content))
+        },
+        getTime:(time) => {
+            dispatch(getTime(time))
+        },
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleList));

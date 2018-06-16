@@ -129,7 +129,7 @@ body{
 .articleContainer{
   width: 100%;
   display: inline-block;
-  
+  overflow: scroll;
   padding-top: 2%;
 }
 
@@ -161,7 +161,7 @@ body{
 }
 
 .articleCellTitle{
-  
+  cursor: pointer;
   font-size: 28px;
 }
 
@@ -254,7 +254,8 @@ body{
 	border:none;
 	padding:15px 20px;
 	border-radius:25px;
-	background:rgba(255,255,255,.1);
+  background:rgba(255,255,255,.1);
+  outline: none;
 }
 .login-form .group input[data-type="password"]{
 	-webkit-text-security:circle;
@@ -343,6 +344,21 @@ body{
 
 
 
+.user-icon .user-path {
+  fill: rgb(248, 232, 186);
+  stroke: #f37004;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  -webkit-animation: dash 3s .3s linear forwards;
+  animation: dash 3s .3s linear forwards;
+  -webkit-animation: dash 3s .8s linear forwards;
+  animation: dash 3s .8s linear forwards;
+}
+
 /* ============= NewPost============= */
 
 .newPost{
@@ -366,4 +382,20 @@ textarea{
   font-size: 30px;
   font-family: 'Oregano', cursive;
   letter-spacing: 3px;
+}
+
+.submitButton{
+  margin-top:3%;
+  background-color:#f37004;
+  color: rgb(248, 232, 186);
+  font-family: 'Oregano', cursive;
+  font-size: 30px;
+  outline: none;
+  width: 20%;
+  height:10%;
+  border-radius: 5px;
+}
+
+.submitButton:hover{
+  background-color: #ce6107;
 }
