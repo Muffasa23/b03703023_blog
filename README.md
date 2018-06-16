@@ -1,13 +1,13 @@
  ## Demo
- ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/src/demo/blog)
+ ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/demo/blog)
  Sign up:
- ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/src/demo/sign_up.gif)
+ ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/demo/sign_up.gif)
  Sign in:
- ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/src/demo/sign_in.gif)
+ ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/demo/sign_in.gif)
  Read posts:
- ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/src/demo/read_posts.gif)
+ ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/demo/read_posts.gif)
  Add post:
- ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/src/demo/add_posts.gif)
+ ![img](https://github.com/Muffasa23/b03703023_blog/blob/master/demo/add_posts.gif)
  
  ## Description
 The app is built with `react`, `Express` and `mysql`.
