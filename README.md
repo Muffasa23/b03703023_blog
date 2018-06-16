@@ -21,7 +21,7 @@ You are able to...
 
 
 ## Possible Errors
-- There are some problems during the database create stage, I have to reload the server page to let the tables being set correctly.
+- The error `GET /__webpack_hmr 404` keeps showing up in the console every couple of seconds (Changing the server port can solve it temporarily)
 - The server crashes out at times with the `ER_CON_COUNT_ERROR: Too many connections` error
 
 
