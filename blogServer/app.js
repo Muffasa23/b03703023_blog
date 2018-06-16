@@ -35,8 +35,8 @@ app.set('view engine', 'jade');
 app.use(function(req, res, next) {
   res.locals.connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'root',
-    password : '',
+    user     : 'guest',
+    password : '123456789',
     port: 3306
   });
   res.locals.connection.connect();
